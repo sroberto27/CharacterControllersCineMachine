@@ -5,39 +5,77 @@ using UnityEngine;
 public class simpleRigidBody : MonoBehaviour
 {
     [SerializeField]
-    private Animator animator;
+    private Animator _animator;
     [SerializeField]
-    private Rigidbody rb;
-    private float playerSpeed = 3;
-    private Vector3 movement;
-    Vector3 m_EulerAngleVelocity;
+    private Rigidbody _rigidbody;
+    [SerializeField]
+    private CapsuleCollider _collider;
+    [SerializeField]
+    private Transform _groundchecker;
+    [SerializeField]
+    private float playerSpeed = 10f;
+    [SerializeField]
+    private float jumpPower = 3f;
+    private bool grounded;
+    private bool sliding;
+    private bool jumping;
+    private Vector3 input = Vector3.zero;
     // Start is called before the first frame update
     void Start()
     {
-        rb = GetComponent<Rigidbody>();
-        animator = gameObject.GetComponentInChildren<Animator>();
-        Cursor.lockState = CursorLockMode.Locked;
-        m_EulerAngleVelocity = new Vector3(0, 100, 0);
+        _rigidbody = GetComponent<Rigidbody>();
+        _animator = gameObject.GetComponentInChildren<Animator>();
+        _collider = gameObject.GetComponent<CapsuleCollider>();
+        _groundchecker = transform.Find("GroundChecker");
+        Cursor.lockState = CursorLockMode.Locked;        
     }
 
     // Update is called once per frame
     void Update()
-    {
-        
-        
+    {              
+        //sliding check
+        if (Input.GetKey(KeyCode.LeftShift) && grounded)
+        {           
+            _collider.height = 0.8f;
+            _collider.center = new Vector3(0, .5f, 0);
+            _animator.SetBool("Sliding", true);
+            sliding = true;
+        }
+        else
+        {            
+            _collider.height = 1.8f;
+            _collider.center = new Vector3(0, .9f, 0);
+            _animator.SetBool("Sliding", false);
+            sliding = false;
+        }
+
+        //jumping
+        if (Input.GetKey(KeyCode.Space) && grounded)
+        {
+            jumping = true;            
+        }
+        _animator.SetFloat("Vertical", _rigidbody.velocity.y);
+
+        //get input
+        input = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
+        if (input != Vector3.zero)
+        {
+            transform.rotation = Quaternion.LookRotation(input);            
+            _animator.SetFloat("Forward", Mathf.Max(Mathf.Abs(Input.GetAxis("Vertical")), Mathf.Abs(Input.GetAxis("Horizontal"))));
+        }
     }
 
     void FixedUpdate() {
-        //Store user input as a movement vector
-        Vector3 m_Input = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
-
-        //Apply the movement vector to the current position, which is
-        //multiplied by deltaTime and speed for a smooth MovePosition
-        rb.MovePosition(transform.position + m_Input * Time.deltaTime * playerSpeed);
-
-        if(m_Input != Vector3.zero) {
-            //rb.gameObject.transform.rotation = Quaternion.SetLookRotation(m_Input);
+               
+        grounded = Physics.Raycast(_groundchecker.position, Vector3.down, .20f);        
+        if (!sliding) {            
+            _rigidbody.AddForce(input * playerSpeed, ForceMode.Force);            
         }
-        
+
+        if (jumping)
+        {
+            _rigidbody.AddForce(Vector3.up * jumpPower, ForceMode.Impulse);            
+            jumping = false;
+        }
     }
 }
