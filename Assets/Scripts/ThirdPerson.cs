@@ -41,7 +41,7 @@ public class ThirdPerson : MonoBehaviour
             velocity.y += gravity * Time.deltaTime;
 
         }
-
+        
         //set jump/falling animation if needed
         if (grounded) {
             animator.SetFloat("Vertical", 0);
@@ -67,10 +67,7 @@ public class ThirdPerson : MonoBehaviour
             
         }
 
-        //move character
-        controller.Move(playerSpeed * Time.deltaTime * movement);
-
-        //add gravity/jump
-        controller.Move(velocity * Time.deltaTime);
+        movement = new Vector3(movement.x, 0, movement.z).normalized;
+        controller.Move(new Vector3(movement.x * playerSpeed, velocity.y , movement.z * playerSpeed ) * Time.deltaTime);
     }
 }
