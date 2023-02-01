@@ -57,9 +57,14 @@ public class ThirdPerson : MonoBehaviour
 
         //slide
         if (Input.GetKey(KeyCode.LeftShift) && grounded) {
-            animator.SetBool("Sliding", true);
+            controller.height = 0.8f;
+            controller.center = new Vector3(0, .4f, 0);
+            animator.SetBool("Sliding", true);            
         } else {
+            controller.height = 1.8f;
+            controller.center = new Vector3(0, .9f, 0);
             animator.SetBool("Sliding", false);
+            
         }
 
         //move character

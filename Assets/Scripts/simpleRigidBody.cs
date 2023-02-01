@@ -37,7 +37,7 @@ public class simpleRigidBody : MonoBehaviour
         if (Input.GetKey(KeyCode.LeftShift) && grounded)
         {           
             _collider.height = 0.8f;
-            _collider.center = new Vector3(0, .5f, 0);
+            _collider.center = new Vector3(0, .4f, 0);
             _animator.SetBool("Sliding", true);
             sliding = true;
         }
