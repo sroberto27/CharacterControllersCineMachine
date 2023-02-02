@@ -20,6 +20,7 @@ public class simpleRigidBody : MonoBehaviour
     private bool sliding;
     private bool jumping;
     private Vector3 input = Vector3.zero;
+
     // Start is called before the first frame update
     void Start()
     {
