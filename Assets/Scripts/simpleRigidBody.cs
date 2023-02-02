@@ -33,9 +33,16 @@ public class simpleRigidBody : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {              
-        //sliding check
-        if (Input.GetKey(KeyCode.LeftShift) && grounded)
+    {        
+        //falling animation
+        if (grounded) {
+            _animator.SetFloat("Vertical", 0);
+        } else {
+            _animator.SetFloat("Vertical", _rigidbody.velocity.y);
+        }       
+
+        //sliding check        
+        if (Input.GetKey(KeyCode.LeftShift))
         {           
             _collider.height = 0.8f;
             _collider.center = new Vector3(0, .4f, 0);
@@ -54,8 +61,7 @@ public class simpleRigidBody : MonoBehaviour
         if (Input.GetKey(KeyCode.Space) && grounded)
         {
             jumping = true;            
-        }
-        _animator.SetFloat("Vertical", _rigidbody.velocity.y);
+        }              
 
         //get input
         input = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
@@ -70,7 +76,7 @@ public class simpleRigidBody : MonoBehaviour
                
         grounded = Physics.Raycast(_groundchecker.position, Vector3.down, .20f);        
         if (!sliding) {            
-            _rigidbody.AddForce(input * playerSpeed, ForceMode.Force);            
+            _rigidbody.AddForce(input * playerSpeed, ForceMode.Force);
         }
 
         if (jumping)
