@@ -5,10 +5,8 @@ using UnityEngine;
 public class ccMove : MonoBehaviour
 {
     private CharacterController controller;
-    [SerializeField]
-    private float playerSpeed = 3;
-    [SerializeField]
-    private float rotateSpeed = 0.25f;
+    public float playerSpeed = 3;
+    public float rotateSpeed = 0.25f;
 
     // Start is called before the first frame update
     void Start()

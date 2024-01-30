@@ -15,11 +15,11 @@ public class MoveTransform : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.W))
         {
-            transform.position += transform.forward * 0.05f;
+            transform.position += transform.forward * 0.005f;
         }
         if (Input.GetKey(KeyCode.S))
         {
-            transform.position -= transform.forward * 0.05f;
+            transform.position -= transform.forward * 0.005f;
         }
         if (Input.GetKey(KeyCode.A)) {
             transform.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y - .25f, transform.eulerAngles.z);
