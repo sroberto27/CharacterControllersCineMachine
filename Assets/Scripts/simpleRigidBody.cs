@@ -19,7 +19,7 @@ public class simpleRigidBody : MonoBehaviour
     private bool grounded;
     private bool sliding;
     private bool jumping;
-    private Vector3 input = Vector3.zero;
+    private Vector3 movement = Vector3.zero;
 
     // Start is called before the first frame update
     void Start()
@@ -64,10 +64,10 @@ public class simpleRigidBody : MonoBehaviour
         }              
 
         //get input
-        input = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
-        if (input != Vector3.zero)
+        movement = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
+        if (movement != Vector3.zero)
         {
-            transform.rotation = Quaternion.LookRotation(input);            
+            transform.rotation = Quaternion.LookRotation(movement);            
             _animator.SetFloat("Forward", Mathf.Max(Mathf.Abs(Input.GetAxis("Vertical")), Mathf.Abs(Input.GetAxis("Horizontal"))));
         }
     }
@@ -76,7 +76,7 @@ public class simpleRigidBody : MonoBehaviour
                
         grounded = Physics.Raycast(_groundchecker.position, Vector3.down, .20f);        
         if (!sliding) {            
-            _rigidbody.AddForce(input * playerSpeed, ForceMode.Force);
+            _rigidbody.AddForce(movement * playerSpeed, ForceMode.Force);
         }
 
         if (jumping)

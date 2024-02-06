@@ -19,7 +19,8 @@ public class SimpleController : MonoBehaviour
 
     private void Start()
     {
-        
+        controller = gameObject.GetComponent<CharacterController>();
+        animator = gameObject.GetComponentInChildren<Animator>();
     }
 
     void Update()
@@ -58,8 +59,12 @@ public class SimpleController : MonoBehaviour
         controller.Move(playerVelocity * Time.deltaTime);
 
         if(Input.GetKey (KeyCode.LeftShift) && groundedPlayer){
+            controller.height = 0.8f;
+            controller.center = new Vector3(0, .4f, 0);
             animator.SetBool ("Sliding", true);
         }else{
+            controller.height = 1.8f;
+            controller.center = new Vector3(0, .9f, 0);
             animator.SetBool ("Sliding", false);
         }
     }

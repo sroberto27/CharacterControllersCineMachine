@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ccSimpleMove : MonoBehaviour
+public class SimpleMove : MonoBehaviour
 {
     private CharacterController controller;
     public float playerSpeed = 3;

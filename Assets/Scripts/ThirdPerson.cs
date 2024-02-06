@@ -67,6 +67,7 @@ public class ThirdPerson : MonoBehaviour
             
         }
 
+        //movement = new Vector3(movement.x, 0, movement.z);
         movement = new Vector3(movement.x, 0, movement.z).normalized;
         controller.Move(new Vector3(movement.x * playerSpeed, velocity.y , movement.z * playerSpeed ) * Time.deltaTime);
     }

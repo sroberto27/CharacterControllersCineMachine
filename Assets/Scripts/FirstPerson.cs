@@ -11,16 +11,18 @@ public class FirstPerson : MonoBehaviour
     [SerializeField]
     private float playerSpeed = 3;    
     [SerializeField]
-    private float jumpForce = .75f;
+    private float jumpForce = 200.0f;
     [SerializeField]
     private float gravity = -9.81f;
     private Vector3 movement;
     private Vector3 velocity;
+    private Vector3 cameraPosition;
 
     // Start is called before the first frame update
     void Start() {
         controller = gameObject.GetComponent<CharacterController>();
         animator = gameObject.GetComponentInChildren<Animator>();
+        cameraPosition = Camera.main.transform.position;
         Cursor.lockState = CursorLockMode.Locked;
     }
 
@@ -37,7 +39,7 @@ public class FirstPerson : MonoBehaviour
 
         //check if jumping and add gravity to player velocity vector
         if (Input.GetKeyDown(KeyCode.Space) && controller.isGrounded) {
-            velocity.y = jumpForce * -gravity;
+            velocity.y = jumpForce * -gravity * Time.deltaTime; ;
         } else {
             velocity.y += gravity * Time.deltaTime;
         }
@@ -52,8 +54,11 @@ public class FirstPerson : MonoBehaviour
         //slide
         if (Input.GetKey(KeyCode.LeftShift) && grounded) {
             animator.SetBool("Sliding", true);
-        } else {
+            Camera.main.transform.localPosition = cameraPosition - new Vector3(0, 1.0f, 0);
+        }
+        else {
             animator.SetBool("Sliding", false);
+            Camera.main.transform.localPosition = cameraPosition;
         }
 
         //set forward animation if movement

@@ -639,7 +639,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68dddf41f68793644962f72729ac0cef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mouseSensitivity: 200
+  mouseSensitivity: 800
   player: {fileID: 0}
 --- !u!1 &1249170961
 GameObject:
@@ -2199,7 +2199,7 @@ MonoBehaviour:
   controller: {fileID: 0}
   animator: {fileID: 0}
   playerSpeed: 3
-  jumpForce: 0.75
+  jumpForce: 200
   gravity: -9.81
 --- !u!4 &8168818473106704600
 Transform:
